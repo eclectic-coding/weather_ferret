@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/eclectic-coding/weather-ferret'
-  spec.metadata['changelog_uri'] = 'https://github.com/eclectic-coding/weather-ferret'
+  spec.metadata['source_code_uri'] = 'https://github.com/eclectic-coding/weather_ferret'
+  spec.metadata['changelog_uri'] = 'https://github.com/eclectic-coding/weather_ferret'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -30,6 +30,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'colorize', '~>0.8.1'
+  # spec.add_development_dependency 'darksky-api', '~>0.1.0'
+  spec.add_development_dependency 'httparty'
+  # spec.add_development_dependency 'myweatherforecast'
   spec.add_development_dependency 'pry', '~>0.12.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
