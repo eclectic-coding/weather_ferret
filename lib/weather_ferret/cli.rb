@@ -1,4 +1,5 @@
 require 'colorize'
+require 'geocoder'
 require 'pry'
 # require 'myweatherforecast'
 # require 'darksky-api'
@@ -46,6 +47,7 @@ class WeatherFerret::CLI
       start
     elsif input_city_confirm == 'y'
       puts 'Here is your forecast:'.colorize(:blue)
+      city_to_coordinates(input_city)
       exit
     else
       puts ''
@@ -54,18 +56,10 @@ class WeatherFerret::CLI
     end
   end
 
-  # Using MyWeatherForecast
-  # def print_temp
-  #   loc = MyWeatherForecast.new 'Whiteville, NC', api_key: '4d0f098cae5dc95ab3bc770d3dd3e64c'
-  #   puts loc.days.take 3
-  #   puts '--------------------'
-  #   puts "Current Conditions: ICON #{loc.now}"
-  # end
-
-  # def print_temp
-  #   nyc = DarkSky::Location.new [40.7828687, -73.9675438]
-  #   puts "temperature: #{nyc.current.temperature}" # actual air temperature
-  #   puts "feels like: #{nyc.current.feels_like}" # apparent temperature
-  # end
+  def city_to_coordinates(input_city)
+    results = Geocoder.search(input_city)
+    p results.first.coordinates
+    p results.first.coordinates
+  end
 
 end
