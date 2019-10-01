@@ -43,13 +43,28 @@ class WeatherFerret::CLI
       menu
     elsif input_confirm == 'y'
       puts 'Here is your forecast:'.colorize(:blue)
-      @forecast = WeatherFerret::Request.coordinates(location)
+      display_forecast(location)
       exit
     else
       puts ''
       puts '<== ERROR ==>'.colorize(:yellow).on_red
       puts 'I do not understand your response, please try again.'
       menu
+    end
+  end
+
+  def display_forecast(location)
+    @forecast = WeatherFerret::Request.fetch_forecast(location)
+    @forecast['daily'].each do |key, value|
+      next unless key == 'data'
+
+      value.each do |n|
+        date = Time.at(n['time'])
+        puts "#{date.strftime('%a')} - #{date.month}/#{date.day}".colorize(:blue)
+        puts "High: #{n['temperatureMax'].to_i}F\tLow: #{n['temperatureMin'].to_i}F"
+        puts n['summary'].to_s
+        puts ''
+      end
     end
   end
 
