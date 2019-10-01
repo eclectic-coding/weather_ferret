@@ -23,3 +23,9 @@ Style/HashSyntax:
 # has_key? and has_value? are far more readable than key? and value?
 Style/PreferredHashMethods:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

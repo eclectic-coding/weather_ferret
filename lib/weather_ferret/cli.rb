@@ -1,17 +1,12 @@
 require 'colorize'
-require 'geocoder'
 require 'pry'
-# require 'myweatherforecast'
-# require 'darksky-api'
-# DarkSky.config '4d0f098cae5dc95ab3bc770d3dd3e64c'
 
 class WeatherFerret::CLI
 
   def call
     list_banner
     list_intro
-    start
-    # print_temp
+    menu
   end
 
   def list_banner
@@ -31,35 +26,31 @@ class WeatherFerret::CLI
     puts ''
     puts ' WEATHER FERRET is your own personal weather assistant.'.colorize(:white)
     puts ' Enter a location below for the current weather forecast'.colorize(:white)
-    puts ' The forecast units will default to your location (i.e mph/kph)'.colorize(:cyan)
+    # puts ' The forecast units will default to your location (i.e mph/kph)'.colorize(:cyan)
     puts '---------------------------------------------------------------------'.colorize(:white)
     puts ''
   end
 
-  def start
+  def menu
     puts ''
     puts 'Please enter a city for a forecast (Format: City State):'
-    input_city = gets.strip
-    puts "You entered: #{input_city}".colorize(:blue) + ' Is this correct (Y/N)?'
-    input_city_confirm = gets.strip.downcase
-    if input_city_confirm == 'n'
+    location = gets.strip
+
+    puts "You entered: #{location}".colorize(:blue) + ' Is this correct (Y/N)?'
+    input_confirm = gets.strip.downcase
+    if input_confirm == 'n'
       puts 'I am sorry, let us try again.'
-      start
-    elsif input_city_confirm == 'y'
+      menu
+    elsif input_confirm == 'y'
       puts 'Here is your forecast:'.colorize(:blue)
-      city_to_coordinates(input_city)
+      @forecast = WeatherFerret::Request.coordinates(location)
       exit
     else
       puts ''
-      puts 'I do not understand your response.'
-      start
+      puts '<== ERROR ==>'.colorize(:yellow).on_red
+      puts 'I do not understand your response, please try again.'
+      menu
     end
-  end
-
-  def city_to_coordinates(input_city)
-    results = Geocoder.search(input_city)
-    p results.first.coordinates
-    p results.first.coordinates
   end
 
 end
