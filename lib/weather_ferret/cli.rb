@@ -44,7 +44,14 @@ class WeatherFerret::CLI
       menu
     elsif input_confirm == 'y'
       system('cls') || system('clear')
-      display_forecast(location)
+      # WeatherFerret::Request.find_location_csv(location)
+      current_conditions(location)
+      # Extended forecast
+      puts 'Extended forecast:'.colorize(:blue)
+      puts '--------------------'
+
+      puts ''
+      display_forecast
       exit
     else
       puts ''
@@ -54,14 +61,13 @@ class WeatherFerret::CLI
     end
   end
 
-  def display_forecast(location)
+  def current_conditions(location)
     @forecast = WeatherFerret::Request.fetch_forecast(location)
     curr_temp = @forecast['currently']['temperature'].to_i
     feel_temp = @forecast['currently']['apparentTemperature'].to_i
     humidity = (@forecast['currently']['humidity'] * 100).to_i
     wind_speed = @forecast['currently']['windSpeed'].to_i
     curr_table = TTY::Table.new ["\u{1F321} Temp.: #{curr_temp}°F", "\u{1F321} RealFeel: #{feel_temp}°F"], [["\u{1F4A6} Humidity: #{humidity}\u{0025}", "\u{1F343} Wind Speed: #{wind_speed}mph"]]
-    # binding.pry
     # Current Conditions
     puts ''
     puts ''
@@ -69,11 +75,9 @@ class WeatherFerret::CLI
     puts '====================================='
     puts curr_table.render(:ascii, padding: [0, 2])
     puts ''
-    # Extended forecast
-    puts 'Here is your extended forecast:'.colorize(:blue)
-    puts '-----------------------------------'
+  end
 
-    puts ''
+  def display_forecast
     @forecast['daily'].each do |key, value|
       next unless key == 'data'
 
@@ -87,6 +91,4 @@ class WeatherFerret::CLI
       end
     end
   end
-
-
 end
