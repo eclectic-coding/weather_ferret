@@ -42,7 +42,7 @@ class WeatherFerret::CLI
       puts 'I am sorry, let us try again.'
       menu
     elsif input_confirm == 'y'
-      puts 'Here is your forecast:'.colorize(:blue)
+      system('cls') || system('clear')
       display_forecast(location)
       exit
     else
@@ -55,6 +55,18 @@ class WeatherFerret::CLI
 
   def display_forecast(location)
     @forecast = WeatherFerret::Request.fetch_forecast(location)
+    # Current Conditions
+    puts ''
+    puts ''
+    puts "Current Conditions for #{location}:".colorize(:blue)
+    puts '====================================='
+    puts "Temperature: #{@forecast['currently']['temperature'].to_i}F\tRealFeel: #{@forecast['currently']['apparentTemperature'].to_i}F"
+    puts "Humidity: #{(@forecast['currently']['humidity'] * 100).to_i}%\t#{@forecast['currently']['windSpeed'].to_i}mph"
+    # Extended forecast
+    puts ''
+    puts 'Here is your extended forecast:'.colorize(:blue)
+    puts '-----------------------------------'
+    puts ''
     @forecast['daily'].each do |key, value|
       next unless key == 'data'
 
@@ -67,5 +79,6 @@ class WeatherFerret::CLI
       end
     end
   end
+
 
 end
