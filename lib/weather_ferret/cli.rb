@@ -1,4 +1,5 @@
 require 'colorize'
+require 'tty-table'
 require 'pry'
 
 class WeatherFerret::CLI
@@ -55,17 +56,23 @@ class WeatherFerret::CLI
 
   def display_forecast(location)
     @forecast = WeatherFerret::Request.fetch_forecast(location)
+    curr_temp = @forecast['currently']['temperature'].to_i
+    feel_temp = @forecast['currently']['apparentTemperature'].to_i
+    humidity = (@forecast['currently']['humidity'] * 100).to_i
+    wind_speed = @forecast['currently']['windSpeed'].to_i
+    curr_table = TTY::Table.new ["\u{1F321} Temp.: #{curr_temp}°F", "\u{1F321} RealFeel: #{feel_temp}°F"], [["\u{1F4A6} Humidity: #{humidity}\u{0025}", "\u{1F343} Wind Speed: #{wind_speed}mph"]]
+    # binding.pry
     # Current Conditions
     puts ''
     puts ''
     puts "Current Conditions for #{location}:".colorize(:blue)
     puts '====================================='
-    puts "Temperature: #{@forecast['currently']['temperature'].to_i}F\tRealFeel: #{@forecast['currently']['apparentTemperature'].to_i}F"
-    puts "Humidity: #{(@forecast['currently']['humidity'] * 100).to_i}%\t#{@forecast['currently']['windSpeed'].to_i}mph"
-    # Extended forecast
+    puts curr_table.render(:ascii, padding: [0, 2])
     puts ''
+    # Extended forecast
     puts 'Here is your extended forecast:'.colorize(:blue)
     puts '-----------------------------------'
+
     puts ''
     @forecast['daily'].each do |key, value|
       next unless key == 'data'
@@ -73,7 +80,8 @@ class WeatherFerret::CLI
       value.each do |n|
         date = Time.at(n['time'])
         puts "#{date.strftime('%a')} - #{date.month}/#{date.day}".colorize(:blue)
-        puts "High: #{n['temperatureMax'].to_i}F\tLow: #{n['temperatureMin'].to_i}F"
+        puts "High: #{n['temperatureMax'].to_i}°F\tLow: #{n['temperatureMin'].to_i}°F"
+        puts "Humidity: #{n['humidity'].to_i}\u{0025}\tWind Speed: #{n['windSpeed'].to_i}mph"
         puts n['summary'].to_s
         puts ''
       end
