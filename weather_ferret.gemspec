@@ -32,11 +32,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'colorize', '~>0.8.1'
   spec.add_development_dependency 'forecast_io', '~>2.0.0'
   spec.add_development_dependency 'geocoder', '~>1.5.0'
-  # spec.add_development_dependency 'httparty', '~>0.17.0'
   spec.add_development_dependency 'json', '~>2.2.0'
   spec.add_development_dependency 'pry', '~>0.12.0'
   spec.add_development_dependency 'rake', '~> 10.0'
-  # spec.add_development_dependency 'rest-client', '~>2.1.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'tty-spinner', '~>0.9.0'
   spec.add_development_dependency 'tty-table', '~>0.10.0'
 end

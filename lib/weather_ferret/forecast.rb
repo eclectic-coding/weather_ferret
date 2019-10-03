@@ -1,3 +1,4 @@
+require 'tty-spinner'
 require 'tty-table'
 require 'pry'
 
@@ -29,6 +30,14 @@ class WeatherFerret::Forecast
 
   # DISPLAY -- Current Weather Section ==============================
   def self.display_curr_table(location)
+    ## Add TTY Spinner
+    spinner = TTY::Spinner.new('[:spinner] Fetch from API', format: :bouncing_ball, clear: true)
+    20.times do
+      spinner.spin
+      sleep(0.1)
+    end
+    spinner.success
+
     @forecast = WeatherFerret::Request.fetch(location)
     curr_table = TTY::Table.new ["\u{1F321} Temp.: #{fetch_curr_data('temperature')} °F",
                                  "\u{1F321} Heat Index: #{fetch_curr_data('apparentTemperature')}°F"],
