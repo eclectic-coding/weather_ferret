@@ -4,7 +4,7 @@ require 'pry'
 
 class WeatherFerret::Forecast
 
-  # Current Weather Methods ==============================
+  # Current Weather Data ==============================
   def self.fetch_curr_data(key_data)
     @forecast['currently'][key_data].to_i
   end
@@ -14,6 +14,8 @@ class WeatherFerret::Forecast
     @forecast['daily']['data'][num][key_data].to_i
   end
 
+  # Sunset/sunrise methods have to be fetched separately
+  # Because of speed, second method was not converting time
   def self.fetch_sunrise(num)
     time = Time.at(@forecast['daily']['data'][num]['sunriseTime'])
     time.strftime('%I:%M %p')
@@ -24,8 +26,8 @@ class WeatherFerret::Forecast
     time.strftime('%I:%M %p')
   end
 
-  def self.fetch_summary(num)
-    @forecast['daily']['data'][num]['summary']
+  def self.fetch_data_string(num, key_data)
+    @forecast['daily']['data'][num][key_data]
   end
 
   # DISPLAY -- Current Weather Section ==============================
@@ -65,14 +67,25 @@ class WeatherFerret::Forecast
     date = Time.at(@forecast['daily']['data'][num]['time'])
     puts ''
     puts " Detailed forecast on #{date.strftime('%a')} - #{date.month}/#{date.day}".colorize(:blue)
-    puts ' =========================================='
-    puts " Hi: #{fetch_data(num, 'temperatureHigh')}°F  Lo: #{fetch_data(num, 'temperatureLow')}°F  Heat Index: #{fetch_data(num, 'apparentTemperatureHigh')}°F"
-    puts " Wind: #{fetch_data(num, 'windSpeed')}mph  Precip Prob.: #{fetch_data(num, 'precipProbability')}\u{0025}  Possible Precip.: #{fetch_data(num, 'precipType')}"
-    puts " Humidity: #{fetch_data(num, 'humidity')}\u{0025}  Sunrise: #{fetch_sunrise(num)}  Sunset: #{fetch_sunset(num)}"
-    puts " Summary: #{fetch_summary(num)}"
+    puts ' =========================================='.colorize(:blue)
 
     # Build table
-
+    # pastel = Pastel.new
+    detail_table = TTY::Table.new do |t|
+      t << ["Hi: #{fetch_data(num, 'temperatureHigh')}°F",
+            "Lo: #{fetch_data(num, 'temperatureLow')}°F",
+            "Heat Index: #{fetch_data(num, 'apparentTemperatureHigh')}°F"]
+      t << ["Wind: #{fetch_data(num, 'windSpeed')}mph",
+            "Precip Prob.: #{fetch_data(num, 'precipProbability')}\u{0025}",
+            "Precip.: #{fetch_data_string(num, 'precipType')}"]
+      t << ["Humidity: #{fetch_data(num, 'humidity')}\u{0025}",
+            "Sunrise: #{fetch_sunrise(num)}", "Sunset: #{fetch_sunset(num)}"]
+    end
+    puts detail_table.render(:ascii, padding: [0, 2]) { |renderer|
+      renderer.border.separator = :each_row
+      renderer.border.style = :cyan
+    }
+    puts "    #{fetch_data_string(num, 'summary')}".colorize(:red)
     puts ''
     display_forecast_list
     puts ''
