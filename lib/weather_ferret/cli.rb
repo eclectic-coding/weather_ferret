@@ -23,7 +23,7 @@ class WeatherFerret::CLI
     puts ''
     puts ' WEATHER FERRET is your own personal weather assistant.'.colorize(:white)
     puts ' Enter a location below for the current weather forecast'.colorize(:white)
-    # puts ' The forecast units will default to your location (i.e mph/kph)'.colorize(:cyan)
+    puts ' The forecast units will default to the users geographical location (i.e mph/kph)'.colorize(:white)
     puts '---------------------------------------------------------------------'.colorize(:white)
     puts ''
   end
@@ -31,12 +31,10 @@ class WeatherFerret::CLI
   def menu
     puts ''
     puts 'Please enter a city to retrieve a forecast (Format: City State):'
-    # location = gets.strip
-    location = 'Dunn NC'
+    location = gets.strip
 
-    # puts "You entered: #{location}".colorize(:blue) + ' Is this correct (Y/N)?'
-    # input_confirm = gets.strip.downcase
-    input_confirm = 'y'
+    puts "You entered: #{location}".colorize(:blue) + ' Is this correct (Y/N)?'
+    input_confirm = gets.strip.downcase
     if input_confirm == 'n'
       puts 'I am sorry, let us try again.'
       menu
@@ -54,7 +52,6 @@ class WeatherFerret::CLI
       puts ''
       options_menu
     else
-      puts '<== ERROR ==>'.colorize(:white).on_red
       begin
         raise WeatherError
       rescue WeatherError => e
@@ -62,6 +59,7 @@ class WeatherFerret::CLI
       end
       menu
     end
+
   end
 
   def options_menu
@@ -70,37 +68,28 @@ class WeatherFerret::CLI
     puts 'Please enter the corresponding number for your request, or any letter to EXIT: '.colorize(:blue)
     detail_input = gets.strip.to_i
     if detail_input.positive? && detail_input < 8
-      # puts 'Value input'
-      # system('cls') || system('clear')
+      system('cls') || system('clear')
       WeatherFerret::Forecast.display_details(detail_input)
-
-    elsif detail_input.is_a? Integer
-      puts ''
-      puts '<== ERROR ==>'.colorize(:white).on_red
-      puts 'I do not understand your response, please try again.'
       options_menu
-      #   system('cls') || system('clear')
-      #   puts 'CURRENT WEATHER HERE'
-      #   puts '-------------------------'
-      #   WeatherFerret::Forecast.display_curr_table(detail)
-      #
-      #   # Extended forecast
-      #   puts 'Extended forecast:'.colorize(:blue)
-      #   puts '--------------------'
-      #   puts ''
-      #   WeatherFerret::Forecast.display_forecast_list
-      else
-      #   puts ''
-      #   puts '<== ERROR ==>'.colorize(:yellow).on_red
-      #   puts 'I do not understand your response, please try again.'
-      #   options_menu
+
+    elsif detail_input.negative? || detail_input > 7
+      begin
+        raise WeatherError
+      rescue WeatherError => e
+        puts e.message
+      end
+      options_menu
+    else
+      exit
     end
-    # WeatherFerret::Forecast.display_forecast_list
   end
 
   class WeatherError < StandardError
     def message
-      'I do not understand your response, please try again.'
+      puts ''
+      puts '    <== ERROR ==>'.colorize(:white).on_red
+      puts ''
+      puts ' I do not understand your response, please try again.'.colorize(:yellow)
     end
   end
 
