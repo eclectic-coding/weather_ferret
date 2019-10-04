@@ -3,11 +3,11 @@ require 'geocoder'
 require 'pry'
 
 class WeatherFerret::Request
-  attr_accessor :location, :lat, :lon
+  attr_accessor :location
 
-  # def initialize(location)
-  #   @location = location
-  # end
+  def initialize(location)
+    @location = location
+  end
 
   def self.coordinate_pts(location)
     city = Geocoder.search(location)
