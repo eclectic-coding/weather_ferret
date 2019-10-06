@@ -17,8 +17,12 @@ class WeatherFerret::Request
 
   def self.fetch(location)
     coordinate_pts(location)
-    ForecastIO.api_key = '4d0f098cae5dc95ab3bc770d3dd3e64c'
+    ForecastIO.configure do |c|
+      c.api_key = '4d0f098cae5dc95ab3bc770d3dd3e64c'
+      c.default_params = { time: 600, exclude: 'minutely, hourly' }
+    end
     @forecast = ForecastIO.forecast(@lat, @lon)
+    binding.pry
   end
 
 end
