@@ -22,7 +22,6 @@ class WeatherFerret::Request
       c.default_params = { time: 600, exclude: 'minutely, hourly' }
     end
     @forecast = ForecastIO.forecast(@lat, @lon)
-    binding.pry
   end
 
 end
