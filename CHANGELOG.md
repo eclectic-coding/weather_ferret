@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
  
 ### Changed
 - Moved Future Features from `README.md` to a separate file: `feature-features.md`.
+
+### Fixed 
+- Fixed bug in precipitation probability method to return a percentage.
  
 ## [0.5.0] - 2019-10-04
   

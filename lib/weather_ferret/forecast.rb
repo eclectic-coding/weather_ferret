@@ -14,6 +14,10 @@ class WeatherFerret::Forecast
     @forecast['daily']['data'][num][key_data].to_i
   end
 
+  def self.fetch_precip(num)
+    @forecast['daily']['data'][num]['precipProbability']
+  end
+
   # Sunset/sunrise methods have to be fetched separately
   # Because of speed, second method was not converting time
   def self.fetch_sunrise(num)
@@ -70,13 +74,12 @@ class WeatherFerret::Forecast
     puts ' =========================================='.colorize(:blue)
 
     # Build table
-    # pastel = Pastel.new
     detail_table = TTY::Table.new do |t|
       t << ["Hi: #{fetch_data(num, 'temperatureHigh')}°F",
             "Lo: #{fetch_data(num, 'temperatureLow')}°F",
             "Heat Index: #{fetch_data(num, 'apparentTemperatureHigh')}°F"]
       t << ["Wind: #{fetch_data(num, 'windSpeed')}mph",
-            "Precip Prob.: #{fetch_data(num, 'precipProbability')}\u{0025}",
+            "Precip Prob.: #{(fetch_precip(num) * 100).to_i}\u{0025}",
             "Precip.: #{fetch_data_string(num, 'precipType')}"]
       t << ["Humidity: #{fetch_data(num, 'humidity')}\u{0025}",
             "Sunrise: #{fetch_sunrise(num)}", "Sunset: #{fetch_sunset(num)}"]
