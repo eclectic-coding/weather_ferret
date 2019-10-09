@@ -11,27 +11,12 @@ class WeatherFerret::Forecast
 
   # Detail Weather Methods ==============================
   def self.fetch_data(num, key_data)
-    @forecast['daily']['data'][num][key_data].to_i
-  end
-
-  def self.fetch_precip(num)
-    @forecast['daily']['data'][num]['precipProbability']
-  end
-
-  # Sunset/sunrise methods have to be fetched separately
-  # Because of speed, second method was not converting time
-  def self.fetch_sunrise(num)
-    time = Time.at(@forecast['daily']['data'][num]['sunriseTime'])
-    time.strftime('%I:%M %p')
-  end
-
-  def self.fetch_sunset(num)
-    time = Time.at(@forecast['daily']['data'][num]['sunsetTime'])
-    time.strftime('%I:%M %p')
-  end
-
-  def self.fetch_data_string(num, key_data)
     @forecast['daily']['data'][num][key_data]
+  end
+
+  def self.fetch_sun_data(num, key_data)
+    time = Time.at(@forecast['daily']['data'][num][key_data])
+    time.strftime('%I:%M %p')
   end
 
   # DISPLAY -- Current Weather Section ==============================
@@ -75,14 +60,14 @@ class WeatherFerret::Forecast
 
     # Build table
     detail_table = TTY::Table.new do |t|
-      t << ["Hi: #{fetch_data(num, 'temperatureHigh')}°F",
-            "Lo: #{fetch_data(num, 'temperatureLow')}°F",
-            "Heat Index: #{fetch_data(num, 'apparentTemperatureHigh')}°F"]
-      t << ["Wind: #{fetch_data(num, 'windSpeed')}mph",
-            "Precip Prob.: #{(fetch_precip(num) * 100).to_i}\u{0025}",
-            "Precip.: #{fetch_data_string(num, 'precipType')}"]
-      t << ["Humidity: #{fetch_data(num, 'humidity')}\u{0025}",
-            "Sunrise: #{fetch_sunrise(num)}", "Sunset: #{fetch_sunset(num)}"]
+      t << ["Hi: #{fetch_data(num, 'temperatureHigh').to_i}°F",
+            "Lo: #{fetch_data(num, 'temperatureLow').to_i}°F",
+            "Heat Index: #{fetch_data(num, 'apparentTemperatureHigh').to_i}°F"]
+      t << ["Wind: #{fetch_data(num, 'windSpeed').to_i}mph",
+            "Precip Prob.: #{(fetch_data(num, 'precipProbability') * 100).to_i}\u{0025}",
+            "Precip.: #{fetch_data(num, 'precipType').to_s.capitalize}"]
+      t << ["Humidity: #{fetch_data(num, 'humidity').to_i}\u{0025}",
+            "Sunrise: #{fetch_sun_data(num, 'sunriseTime')}", "Sunset: #{fetch_sun_data(num, 'sunsetTime')}"]
     end
     puts detail_table.render(:ascii, padding: [0, 2]) { |renderer|
       renderer.border.separator = :each_row
