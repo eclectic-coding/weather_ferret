@@ -73,7 +73,7 @@ class WeatherFerret::Forecast
       renderer.border.separator = :each_row
       renderer.border.style = :cyan
     }
-    puts "    #{fetch_data_string(num, 'summary')}".colorize(:red)
+    puts "    #{fetch_data(num, 'summary')}".colorize(:red)
     puts ''
     display_forecast_list
     puts ''
