@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'colorize', '~>0.8.1'
+  spec.add_development_dependency 'dotenv', '~>2.7.5'
   spec.add_development_dependency 'forecast_io', '~>2.0.0'
   spec.add_development_dependency 'geocoder', '~>1.5.0'
   spec.add_development_dependency 'json', '~>2.2.0'

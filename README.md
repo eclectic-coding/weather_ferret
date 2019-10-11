@@ -3,6 +3,20 @@
 
 Welcome to `Weather Ferret`. What is a Ferret? Yes, of course, a little furry animal, but to _ferret_, also, means to "`look around in search of something`." This gem provides you with a command-line application that lets you query for a weather forecast by providing a location. It uses the [Dark Sky API]() to access both the current conditions, and an extended eight day forecast. The user has the option to get further details on any of the days provided. Happy ferreting!
 
+## Pre-Installation Setup  
+This application uses the `Dark Sky API` to retrieve the weather forecast. Before using `Weather Ferret`, you will need to acquire your API Key. The API is free for the first 1,000 calls per day and so you will find this very generous for your use. 
+
+Go to the [Dark Sky](https://darksky.net/dev) and sign up for your key. 
+
+After you have your key, you will need to create a `.env` (notice the DOT in the file name) in the root of the project. Inside the `.env` file add the following line of code:
+
+```cassandraql
+DSKY_API_KEY=YOURKEYHERE
+```
+The `.env` is already added to the `.gitignore` file so if you fork this project, it will not be uploaded to your repository. 
+
+Happy Ferreting!
+
 
 ### Installation
 
@@ -36,12 +50,6 @@ After the data entry and validation, `Weather Ferret` contacts two API's
 The user can select to exit the application or view more details:
 
 ![weather-report](wf-details.png)
-
-### TODO: Future Features   
-This is a running list of features on a wish list to integrate:   
-- Add caching to `Geocoder` to limit the amount of API calls to convert locations to coordinates.
-- Add custom weather emoji's based on the `icon` field from `Dark Sky API`.
-- Add settings feature to handle units instead of hard coding them (i.e. mph vs. kmp, F vs. C)
 
 ## Development
 
