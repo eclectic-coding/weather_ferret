@@ -1,31 +1,33 @@
-# Commonly used screens these days easily fit more than 80 characters.
-Metrics/LineLength:
-  Max: 150
+# inherit_from: .rubocop_todo.yml
+require:
+#  - rubocop-rails
+#  - rubocop-minitest
 
-# Too short methods lead to extraction of single-use methods, which can make
-# the code easier to read (by naming things), but can also clutter the class
-Metrics/MethodLength:
-  Max: 200
+AllCops:
+  Exclude:
+    -
 
-# Too short methods lead to extraction of single-use methods, which can make
-# the code easier to read (by naming things), but can also clutter the class
-Metrics/AbcSize:
-  Max: 30
+#################### Bundler ###########################
 
-# We do not need to support Ruby 1.9
-Style/SymbolArray:
+Bundler/OrderedGems:
+  Description: >-
+    Gems within groups in the Gemfile should be alphabetically sorted.
   Enabled: true
+  ConsiderPunctuation: true
 
-# Do not mix styles
-Style/HashSyntax:
-  EnforcedStyle: ruby19_no_mixed_keys
+#################### Layout ###########################
 
-# has_key? and has_value? are far more readable than key? and value?
-Style/PreferredHashMethods:
-  Enabled: false
+Layout/LineLength:
+  Description: 'Checks that line length does not exceed the configured limit.'
+  AutoCorrect: true # this is false by default
+  Exclude:
+    - Gemfile
 
-Style/ClassAndModuleChildren:
-  Enabled: false
+#################### Style ###############################
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
+Style/StringLiterals:
+  Description: 'Checks if uses of quotes match the configured preference.'
+  StyleGuide: '#consistent-string-literals'
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: true
