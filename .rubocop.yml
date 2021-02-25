@@ -4,8 +4,7 @@ require:
 #  - rubocop-minitest
 
 AllCops:
-  Exclude:
-    -
+  NewCops: disable
 
 #################### Bundler ###########################
 
