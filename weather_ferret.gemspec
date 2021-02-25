@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "weather_ferret/version"
@@ -17,7 +19,7 @@ Gem::Specification.new do |spec|
     "changelog_uri" => "#{spec.homepage}/CHANGELOG.md",
     "allowed_push_host" => "TODO: Set to 'http://mygemserver.com'",
     "homepage_uri" => spec.homepage.to_s,
-    "source_code_uri" => "https://github.com/eclectic-coding/weather_ferret",
+    "source_code_uri" => "https://github.com/eclectic-coding/weather_ferret"
   }
 
   # Specify which files should be added to the gem when it is released.

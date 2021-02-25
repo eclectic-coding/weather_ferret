@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "geocoder"
 require "pry"
 require "faraday"
@@ -15,21 +17,10 @@ module WeatherFerret
     end
 
     # Convert user entered location to geodetic coordinates
-    def self.coordinate_pts(location)
-      # city = OpenWeather::Current.city(location, options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' })
-      # binding.pry
-
-
-    end
+    def self.coordinate_pts(location) end
 
     # fetch forecast hash from Weather API
-    def self.fetch(location)
-      # options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' }
-      # city = OpenWeather::Current.city(location, options)
-      # binding.pry
-
-      # end
-    end
+    def self.fetch(location) end
 
   end
 end

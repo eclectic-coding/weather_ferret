@@ -25,7 +25,8 @@ module WeatherFerret
     # DISPLAY -- Current Weather Section ==============================
     def self.display_curr_table(location)
       ## Add TTY Spinner
-      spinner = TTY::Spinner.new("[:spinner] Fetch from API", format: :bouncing_ball, clear: true)
+      spinner = TTY::Spinner.new("[:spinner] Fetch from API",
+                                 format: :bouncing_ball, clear: true)
       20.times do
         spinner.spin
         sleep(0.1)
