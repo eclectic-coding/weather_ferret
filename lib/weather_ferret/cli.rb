@@ -31,14 +31,16 @@ class WeatherFerret::CLI
   def menu
     puts ''
     puts 'Please enter a city to retrieve a forecast (Format: City State):'
-    location = gets.strip
+    location = "Wilmington NC"
+    # location = gets.strip
 
-    puts "You entered: #{location}".colorize(:blue) + ' Is this correct (Y/N)?'
+    puts "#{"You entered: #{location}".colorize(:blue)} Is this correct (Y/N)?"
     input_confirm = gets.strip.downcase
-    if input_confirm == 'n'
+    case input_confirm
+    when 'n'
       puts 'I am sorry, let us try again.'
       menu
-    elsif input_confirm == 'y'
+    when 'y'
       system('cls') || system('clear')
       puts ''
       puts "Current Conditions for #{location}:".colorize(:blue)

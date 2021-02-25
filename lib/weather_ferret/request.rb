@@ -1,6 +1,7 @@
-require 'forecast_io'
 require 'geocoder'
+require 'open_weather'
 require 'pry'
+require 'faraday'
 require 'dotenv'
 Dotenv.load('./.env')
 
@@ -15,19 +16,19 @@ class WeatherFerret::Request
 
   # Convert user entered location to geodetic coordinates
   def self.coordinate_pts(location)
-    city = Geocoder.search(location)
-    @lat = city[0].latitude
-    @lon = city[0].longitude
+    # city = OpenWeather::Current.city(location, options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' })
+    # binding.pry
+
+
   end
 
-  # fetch forecast hash from Dark Sky API
+  # fetch forecast hash from Weather API
   def self.fetch(location)
-    coordinate_pts(location)
-    ForecastIO.configure do |c|
-      c.api_key = ENV['DSKY_API_KEY']
-      c.default_params = { time: 600, exclude: 'minutely, hourly' }
-    end
-    @forecast = ForecastIO.forecast(@lat, @lon)
+    options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' }
+    city = OpenWeather::Current.city(location, options)
+    binding.pry
+
+    # end
   end
 
 end
