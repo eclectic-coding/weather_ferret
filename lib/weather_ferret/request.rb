@@ -8,28 +8,28 @@ Dotenv.load("./.env")
 
 module WeatherFerret
   class Request
-  attr_accessor :location
+    attr_accessor :location
 
-  def initialize(location)
-    @location = location
-  end
+    def initialize(location)
+      @location = location
+    end
 
-  # Convert user entered location to geodetic coordinates
-  def self.coordinate_pts(location)
-    # city = OpenWeather::Current.city(location, options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' })
-    # binding.pry
+    # Convert user entered location to geodetic coordinates
+    def self.coordinate_pts(location)
+      # city = OpenWeather::Current.city(location, options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' })
+      # binding.pry
 
 
-  end
+    end
 
-  # fetch forecast hash from Weather API
-  def self.fetch(location)
-    # options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' }
-    # city = OpenWeather::Current.city(location, options)
-    # binding.pry
+    # fetch forecast hash from Weather API
+    def self.fetch(location)
+      # options = { units: 'imperial', APPID: '3d4789029e2e08578efba398668fc1eb' }
+      # city = OpenWeather::Current.city(location, options)
+      # binding.pry
 
-    # end
-  end
+      # end
+    end
 
   end
 end

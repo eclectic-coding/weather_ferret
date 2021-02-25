@@ -1,6 +1,5 @@
 # inherit_from: .rubocop_todo.yml
 require:
-#  - rubocop-rails
 #  - rubocop-minitest
 
 AllCops:
@@ -30,3 +29,9 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
   ConsistentQuotesInMultiline: true
+
+Metrics/LineLength:
+  Max: 80
+
+Metrics/MethodLength:
+  Max: 30
