@@ -14,7 +14,7 @@ gem "httparty", "~> 0.18.1"
 gem "json", "~>2.2.0"
 gem "rake", "~> 13.0"
 gem "tty-spinner", "~>0.9.0"
-gem "tty-table", "~>0.10.0"
+gem "tty-table", "~>0.12.0"
 
 group :development, :test do
   gem "minitest", "~> 5.0"
