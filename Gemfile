@@ -19,6 +19,6 @@ gem "tty-table", "~>0.10.0"
 group :development, :test do
   gem "minitest", "~> 5.0"
   gem "minitest-reporters"
-  gem "pry", "~>0.12.0"
+  gem "pry", "~>0.14.0"
   gem "rubocop", "~> 1.7"
 end
