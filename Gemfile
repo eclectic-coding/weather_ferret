@@ -7,7 +7,7 @@ gemspec
 
 gem "bundler", "~> 2.0"
 gem "colorize", "~>0.8.1"
-gem "dotenv", "~>2.7.5"
+gem "dotenv", "~>2.8.0"
 gem "forecast_io", "~>2.0.0"
 gem "geocoder", "~>1.5.0"
 gem "httparty", "~> 0.18.1"
